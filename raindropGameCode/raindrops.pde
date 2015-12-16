@@ -15,8 +15,8 @@ class Raindrop {
     fill (0, 0, 255);
     ellipse (loc.x, loc.y, diam, diam);
   }
-  boolean isInContactWith (PVector m) {
-    if (m.dist(loc)<diam/2){
+  boolean isInContactWith (Bucket b) {
+    if (loc.dist(b.loc)< diam/2  + b.diam/2 ){
     return true;
     }
     else {
