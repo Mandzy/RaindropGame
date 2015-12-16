@@ -6,7 +6,7 @@ class Raindrop {
   Raindrop (float x, float y) {
     loc = new PVector (x, y);
     vel = new PVector (random (1, 10), random (1, 10));
-    diam = random (10, 150);
+    diam = random (10, 100);
   }
   void fall () {
     loc.y += vel.y;
@@ -25,5 +25,6 @@ class Raindrop {
   }
   void reset () {
     loc.y = 0;
+    loc.x= random(width);
    }
 }
