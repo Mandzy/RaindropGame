@@ -22,8 +22,8 @@ class Raindrop {
     loc.y=0-diam;
     vel = new PVector (0,random (1, 10));
   }
-  boolean isInContactWith (Bucket b) {
-    if (loc.dist(b.loc)< diam/2  + b.diam/2 ) {
+  boolean isInContactWith (Flower F) {
+    if (loc.dist(f.loc)< diam/2  + f.diam/2 ) {
       return true;
     } else {
       return false;
