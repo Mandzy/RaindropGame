@@ -1,4 +1,4 @@
-int count = 500;
+int count = 50;
 PVector mouse;   //declare a P
 Raindrop [] r = new Raindrop [count] ;      //declare a new Raindrop called r
 Bucket b; 
