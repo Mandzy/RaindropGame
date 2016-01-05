@@ -6,11 +6,12 @@ class Bucket {
   Bucket () {
     loc = new PVector (mouseX, mouseY);
     diam = 200;
+      rectMode(CENTER);
   }
   
   void show (){
     fill (255, 0, 0);
-    ellipse (loc.x, loc.y, diam, diam); 
+    rect (loc.x, loc.y, diam, diam); 
   }
   
   void update (){
