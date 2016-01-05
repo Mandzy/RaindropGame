@@ -1,9 +1,9 @@
-class Flower {
+class Bucket {
   PVector loc;
   float diam;
 
 
-  Flower () {
+  Bucket () {
     loc = new PVector (mouseX, mouseY);
     diam = 200;
   }
