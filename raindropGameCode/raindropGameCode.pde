@@ -2,6 +2,7 @@ int count;
 int gamestate;
 int missed;
 int s;
+int fb;
 PVector mouse;   //declare a P
 ArrayList <Raindrop> r;
 //Raindrop [] r = new Raindrop [count] ;      //declare a new Raindrop called r
@@ -17,6 +18,7 @@ void setup() {
   gamestate = 1;
   s= 0;
   missed = 0;
+  fb=0;
   count = 5;
   mouse = new PVector();                //initialize mouse PVector. value is irrelevant since it will be set at the start of void draw(){}
   b = new Bucket();
@@ -33,7 +35,9 @@ void draw() {
     textSize (20);
     text ("Current drops in bucket:", 50, 50); 
     text (s, 100, 75);
-    rect (width/2, height +400 - (missed * 50), width, height);
+    text ("Number of buckets", 1000, 50);
+    text (fb, 1050, 75);
+    rect (width/2, height +400 - (missed * 5), width, height);
     mouse.set(mouseX, mouseY);
     b.show();
     b.update();
@@ -41,15 +45,29 @@ void draw() {
       r.get(i).fall();         //make the raindrop fall. It should accelerate as if pulled towards the ground by earth's gravity
       r.get(i).display();      //display the raindrop
       if (r.get(i).isInContactWith(b)) {      //check to see if the raindrop is in contact with the point represented by the PVector called mouse
+      
+      if (s < 25){
         r.get(i).reset();                         //if it is, reset the raindrop
         s++;
       }
-      if (r.get(i).loc.y > (height) - (missed * 50) + r.get(i).diam/2) {     //check to see if the raindrop goes below the bottom of the screen
+      }
+      if (r.get(i).loc.y > (height) - (missed * 5) + r.get(i).diam/2) {     //check to see if the raindrop goes below the bottom of the screen
         r.get(i).reset();            //if it does, reset the raindrop
-        if (missed < 16) {
+        if (missed < 500) {
           missed ++;
         }
+        if (missed ==500){
+          gamestate = 3;
+        }
       }
+    }
+    if (mousePressed && s==25){ 
+      s=0;
+      fb++;
+    }
+    if (fb==5){
+      missed -= 20;
+      fb=0;
     }
   }
    else if (gamestate == 1) {
@@ -66,4 +84,13 @@ void draw() {
         gamestate = 2;
       }
     }
+    
+   else if (gamestate == 3){
+     background (255, 0, 0);
+     textSize (72);
+     fill(255);
+     text ("GAME OVER", 400, height/2);
+     fill(random(255), random (255), random(255));
+     text("YOU DROWNED!!!", 300, 500);
+   }
   }
