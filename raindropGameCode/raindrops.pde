@@ -7,7 +7,7 @@ class Raindrop {
     loc = new PVector (x, y);
     vel = new PVector (0,random (1, 10));
     acc = new PVector (0,.1);
-    diam = random (10, 100);
+    diam = random (5, 100);
   }
   void fall () {
     vel.add(acc);
