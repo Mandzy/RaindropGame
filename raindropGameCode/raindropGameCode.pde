@@ -7,10 +7,11 @@ PVector mouse;   //declare a P
 ArrayList <Raindrop> r;
 //Raindrop [] r = new Raindrop [count] ;      //declare a new Raindrop called r
 Bucket b; 
+int score;
 
-// On your own, create an array of Raindrop objects instead of just one
-// Use the array instead of the single object
-// You can start out by just using the single Raindrop as you test
+// On your own, create an array of Raindrop objectd indtead of judt one
+// Ude the array indtead of the dingle object
+// You can dtart out by judt uding the dingle Raindrop ad you tedt
 
 
 void setup() {
@@ -18,13 +19,13 @@ void setup() {
   gamestate = 1;
   s= 0;
   missed = 0;
+  score = 0;
   fb=0;
   count = 5;
   mouse = new PVector();                //initialize mouse PVector. value is irrelevant since it will be set at the start of void draw(){}
   b = new Bucket();
   r = new ArrayList <Raindrop>();
   for (int i=0; i<count; i++) {
-    //r[i] = new Raindrop (random(width), 0);   //Initialize r. The parameters used are the initial x and y positions
     r.add(new Raindrop (random(width), 0));
   }
 }
@@ -37,6 +38,8 @@ void draw() {
     text (s, 100, 75);
     text ("Number of buckets", 1000, 50);
     text (fb, 1050, 75);
+    text ("Score", 500, 50);
+    text (score, 550, 75);
     rect (width/2, height +400 - (missed * 5), width, height);
     mouse.set(mouseX, mouseY);
     b.show();
@@ -45,52 +48,70 @@ void draw() {
       r.get(i).fall();         //make the raindrop fall. It should accelerate as if pulled towards the ground by earth's gravity
       r.get(i).display();      //display the raindrop
       if (r.get(i).isInContactWith(b)) {      //check to see if the raindrop is in contact with the point represented by the PVector called mouse
-      
-      if (s < 25){
-        r.get(i).reset();                         //if it is, reset the raindrop
-        s++;
-      }
+
+        if (s < 25) {
+          r.get(i).reset();                         //if it is, reset the raindrop
+          s++;
+        }
       }
       if (r.get(i).loc.y > (height) - (missed * 5) + r.get(i).diam/2) {     //check to see if the raindrop goes below the bottom of the screen
         r.get(i).reset();            //if it does, reset the raindrop
         if (missed < 500) {
           missed ++;
         }
-        if (missed ==500){
+        if (missed ==500) {
           gamestate = 3;
         }
       }
     }
-    if (mousePressed && s==25){ 
+    if (mousePressed && s==25) { 
       s=0;
       fb++;
     }
-    if (fb==5){
+    if (fb==5) {
       missed -= 20;
       fb=0;
+      score += 100;
     }
-  }
-   else if (gamestate == 1) {
-      background (230, 50, 70);
+    if (score==500) {
+      gamestate=4;
+    }
+  } else if (gamestate == 1) {
+    background (230, 50, 70);
+    textSize (72);
+    text ("Rain Check", width/3, 100);
+    textSize (40);
+    text ("Collect the rain drops as quickly as you can.", 200, 200);
+    text ("Click the mouse to dump your bucket once it gets filled at 25 drops.", 10, 300);
+    text ("Be careful though. Don't drown!!!", 300, 400);
+    text ("fill your bucket 5 times to drop the water level", 150, 500);
+    text ("See if you can beat my high score of 500", 200, 600);
+    text ("Press any key to START", 350, 700);
+    if (keyPressed) {
+      gamestate = 2;
+    }
+  } else if (gamestate == 3) {
+    background (255, 0, 0);
+    textSize (72);
+    fill(255);
+    text ("GAME OVER", 400, 300);
+    fill(random(255), random (255), random(255));
+    text("YOU DROWNED!!!", 300, 400);
+    fill(255);
+    text("Final Score", 400, 600);
+    text(score, 500, 700);
+    text ("Press any key to play again", 200, 500);
+    if (keyPressed) {
+      setup();
+    }
+    } else if (gamestate ==4) {
+      background (0, 255, 0);
+      fill (255);
       textSize (72);
-      text ("Rain Check", width/3, height/4);
-      textSize (40);
-      text ("Collect the rain drops as quickly as you can.", 200, 300);
-      text ("Dump your bucket once it gets filled at 25 drops.", 200, 400);
-      text ("Be careful though. Don't drown!!!", 300, 500);
-      text ("fill your bucket 5 times, click your mouse to drop the water", 25, 600);
-      text ("Press any key to START", 400, 700);
-      if (keyPressed){
-        gamestate = 2;
+      text ("YOU WIN!!!!", 400, 300);
+      text ("Press any key to play again", 200, 500);
+      if (keyPressed) {
+        setup ();
       }
     }
-    
-   else if (gamestate == 3){
-     background (255, 0, 0);
-     textSize (72);
-     fill(255);
-     text ("GAME OVER", 400, height/2);
-     fill(random(255), random (255), random(255));
-     text("YOU DROWNED!!!", 300, 500);
-   }
   }
